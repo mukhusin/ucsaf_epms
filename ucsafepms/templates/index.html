@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block hero %}
+<section id="hero" class="d-flex align-items-center">
+    <div class="container" data-aos="zoom-out" data-aos-delay="100">
+      <h1>Welcome to UCSAF <span>ePMS </span></h1>
+      <h2>The Universal Communications Service Access Fund (UCSAF) </h2>
+      <div class="d-flex">
+        <a href="#about" class="btn-get-started scrollto">Get Started</a>
+        <a
+          href="https://www.youtube.com/watch?v=EeIH1nzNq6A"
+          class="glightbox btn-watch-video"
+          ><i class="bi bi-play-circle"></i><span>Watch Video</span></a
+        >
+      </div>
+    </div>
+  </section>
+{% endblock hero %}
+<!-- End Hero -->
+
+{% block content %}
+    <!-- ======= Featured Services Section ======= -->
+<section id="featured-services" class="featured-services">
+    <div class="container" data-aos="fade-up">
+
+      <div class="row">
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+          <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+            <div class="icon"><i class="bx bxl-dribbble"></i></div>
+            <h4 class="title"><a href="">Availability </a></h4>
+            <p class="description">Ensure the availability of communication services in rural and urban under-served areas.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+          <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
+            <div class="icon"><i class="bx bx-file"></i></div>
+            <h4 class="title"><a href="">Universal service</a></h4>
+            <p class="description">Promote the participation of public and private sector in the provision of universal service in the rural and urban underserved areas.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+          <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
+            <div class="icon"><i class="bx bx-tachometer"></i></div>
+            <h4 class="title"><a href="">Competitive Market</a></h4>
+            <p class="description">Create a framework for open and efficient access to and use of communication networks and services in production and availability of competitive market.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+          <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
+            <div class="icon"><i class="bx bx-world"></i></div>
+            <h4 class="title"><a href="">Quality Services</a></h4>
+            <p class="description">Promote widespread provision of quality services at affordable rates </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section><!-- End Featured Services Section -->
+
+  <!-- ======= About Section ======= -->
+  {% include 'partials/_about-us.html' %}
+ <!-- End About Section -->
+
+  <!-- ======= Counts Section ======= -->
+ <!-- End Counts Section -->
+
+  <!-- ======= MNO Section ======= -->
+  <section id="clients" class="clients section-bg">
+    <div class="container" data-aos="zoom-in">
+      <p class="text-center"><h2>Our Partnership Mobile Network Operator</h2></p>
+      <div class="row">
+
+        <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+          <img src="{% static 'img/clients/client-1.png' %}" class="img-fluid" alt="">
+        </div>
+
+        <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+          <img src="{% static 'img/clients/client-2.png' %}" class="img-fluid" alt="">
+        </div>
+
+        <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+          <img src="{% static 'img/clients/client-3.png' %}" class="img-fluid" alt="">
+        </div>
+
+        <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+          <img src="{% static 'img/clients/client-4.png' %}" class="img-fluid" alt="">
+        </div>
+
+        <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+          <img src="{% static 'img/clients/client-5.png' %}" class="img-fluid" alt="">
+        </div>
+
+      </div>
+
+    </div>
+  </section><!-- End MNO Section -->
+
+  <!-- ======= Projects Section ======= -->
+  {% include 'partials/_project.html' %}
+  <!-- End Projects Section -->
+
+
+  <!-- ======= Contact Section ======= -->
+     {% include 'partials/_contact-us.html' %}
+   <!-- End Contact Section -->
+{% endblock content %}
