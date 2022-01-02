@@ -1,12 +1,15 @@
 from django.urls import path
-from . import views
+from .views import RegisterView, ResetPasswordView,VerificationView,UsernameValidationView,LoginView,EmailValidationView
 from django.views.decorators.csrf import csrf_exempt
 
 
 
 urlpatterns = [
-    path('login', views.login, name="login"),
-    path('reset-password', views.reset_password, name="reset-password"),
-    path('validate-username', csrf_exempt(views.UsernameValidationView.as_view()), name="validate-username"),
-    path('validate-email', csrf_exempt(views.EmailValidationView.as_view()), name="validate-email"),
+    path('login', LoginView.as_view(), name="login"),
+    path('register-user', RegisterView.as_view(), name="register-user"),
+    path('reset-password', ResetPasswordView.as_view(), name="reset-password"),
+    path('validate-username', csrf_exempt(UsernameValidationView.as_view()), name="validate-username"),
+    path('validate-email', csrf_exempt(EmailValidationView.as_view()), name="validate-email"),
+    path('activate/<uidb64>/<token>', csrf_exempt(VerificationView.as_view()), name="activate"),
 ]
+ 

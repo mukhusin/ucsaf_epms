@@ -15,6 +15,7 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+from django.contrib import messages
 
 
 # Quick-start development settings - unsuitable for production
@@ -130,3 +131,15 @@ STATIC_ROOT=os.path.join(BASE_DIR,'static')
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MESSAGE_TAGS={
+    messages.ERROR: 'danger'
+}
+
+# email setting
+EMAIL_HOST = os.environ.get('EMAIL_HOST',"smtp.hostinger.com")
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER',"info@g3net.co.tz")
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER',"info@g3net.co.tz")
+EMAIL_PORT = 587
+EMAIL_HOST_PASWWORD = os.environ.get('EMAIL_HOST_PASWWORD',"g3Net11676600")
