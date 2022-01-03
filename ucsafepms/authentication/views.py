@@ -13,7 +13,7 @@ from django.urls import reverse
 from django.utils.encoding import force_bytes,  DjangoUnicodeDecodeError, force_str
 from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
-from django.contrib import auth
+from django.contrib.auth import authenticate, login
 from .utils import token_generator
 # Create your views here.
 
@@ -21,11 +21,11 @@ regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
 
 class RegisterView(View):
     def get(self, request):
-        return render(request,'authentication/login.html')
+        return render(request,'authentication/register-user.html')
     def post(self, request):
-        username = request.POST.get('username',"")
-        email = request.POST.get('email',"")
-        password = request.POST.get('password',"")
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
 
         context = {
             'fieldValue' : request.POST
@@ -36,8 +36,8 @@ class RegisterView(View):
                messages.error(request, 'Password too short')
                return render(request,'authentication/register-user.html', context)
 
-            user = User.objects.create_user(username=username, email=email)
-            user.set_password(password)
+            user = User.objects.create_user(username,email,password)
+            # user.set_password(password)
             user.is_active=False
             uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
             domain=get_current_site(request).domain
@@ -45,13 +45,13 @@ class RegisterView(View):
             activate_url = 'http://'+domain+link
             email_body = 'Hi '+ user.username + 'Please use the link to verify your account\n ' + activate_url
             email_subject = 'Activate your account'
-            email = EmailMessage(
-                email_subject,
-                email_body,
-                'info@g3net.co.tz',
-                [email],
-            )
-            email.send(fail_silently=False)
+            # email = EmailMessage(
+            #     email_subject,
+            #     email_body,
+            #     'info@g3net.co.tz',
+            #     [email],
+            # )
+            # email.send(fail_silently=False)
             user.save()
             messages.success(request, "Account created successfully")
             return render(request,'authentication/register-user.html')
@@ -99,29 +99,33 @@ class VerificationView(View):
             messages.success(request,"Account activated successfully")
             return redirect('login')
         except Exception as ex:
-            pass
+            messages.error(request,ex)
+            return redirect('login')
         
-        return redirect('login')
 
 class LoginView(View):
     def get(self, request):
         return render(request,'authentication/login.html')
 
     def post(self, request):
-        username = request.POST.get('username',"")
-        password = request.POST.get('password',"")
+        username = request.POST['username']
+        password = request.POST['password']
 
         if username and password:
-            user=auth.authenticate(username=username, password=password)
+            user = authenticate(username=username, password=password)
 
-            if user:
+            if user is not None:
                 if user.is_active:
-                    auth.login(request, user)
+                    login(request, user)
                     messages.success(request, 'Welcome, '+ user.username+ 'you are now logged in')
-                messages.error(request,'Account is not active, please contact system admin')
+                    return redirect('dashbord')
+                else:
+                    messages.error(request,'Account is not active, please contact system admin')
+                    return render(request,'authentication/login.html')
+            else:
+                messages.error(request,'Invalid credentials, please try again ')
                 return render(request,'authentication/login.html')
-            messages.error(request,'Invalid credentials, please try again')
+        else:
+            messages.error(request,'All fields are required!')
             return render(request,'authentication/login.html')
-        messages.error(request,'All fields are required!')
-        return render(request,'authentication/login.html')
 
